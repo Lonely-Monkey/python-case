@@ -1,3 +1,7 @@
+import os
+import re
+
+
 def main():
     ctrl = True
     while(ctrl):
@@ -75,3 +79,42 @@ def insert():
             mark = False
         save(studentList)
         print("学生信息录入完毕！")
+
+#删除学生信息
+def delete():
+    mark = True
+    while mark:
+        studentId = input("请输入要删除的学生ID：")
+        if studentId is not "":
+            #判断文件是否存在
+            if os.path.exists("student"):
+                with open("student", 'r') as rfile:
+                    #读取文件内容
+                    student_old = rfile.readlines()
+            else:
+                student_old = []
+            #标记是否删除
+            ifdel = False
+            if student_old:
+                with open("student", 'w') as wfile:
+                    d = {}
+                    for list in student_old:
+                        #字符串转字典
+                        d = dict(eval(list))
+                        if d['id'] != studentId:
+                            wfile.write(str(d) + "\n")
+                        else:
+                            ifdel = True
+                    if ifdel:
+                        print("ID为 %s 的学生信息已经被删除....." % studentId)
+                    else:
+                        print("没有找到ID为 %S 的学生信息...." % studentId)
+            else:
+                print("无学生信息....")
+                break
+            show()
+            inputMark = input("是否继续删除？ （y/n）：")
+            if inputMark == "y":
+                mark = True
+            else:
+                mark = False
