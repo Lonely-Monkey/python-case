@@ -114,7 +114,43 @@ def delete():
                 break
             show()
             inputMark = input("是否继续删除？ （y/n）：")
-            if inputMark == "y":
-                mark = True
-            else:
+            if inputMark == "n":
                 mark = False
+
+#修改学生信息
+def modify():
+    # TODO 显示全部学生信息
+    show()
+    if os.path.exists("student"):
+        with open("student", 'r') as rfile:
+            student_old = rfile.readlines()
+    else:
+        return
+    studentId = input("请输入要修改的学生ID：")
+    with open("student", 'r') as wfile:
+        for student in student_old:
+            #字符串转字典
+            d = dict(eval(student))
+            if d["id"] == studentId:
+                print("找到了这名学生，可以修改他的信息!")
+                while True:
+                    try:
+                        d["name"] = input("请输入姓名：")
+                        d["english"] = int(input("请输入英语成绩："))
+                        d["python"] = int(input("请输入python成绩："))
+                        d["c"] = int(input("请输入c语言成绩："))
+                    except:
+                        print("您的输入有误，请重新输入。")
+                    else:
+                        break
+                #TODO 字典转换为字符串
+                student = str(d)
+                #TODO 将修改的信息写入到文件
+                wfile.write(student + "\n")
+                print("修改成功！")
+            else:
+                #TODO 将未修改的信息写入到文件
+                wfile.write(student)
+    mark = input("是否继续修改其他学生信息？（y/n）：")
+    if mark == "y":
+        modify()
