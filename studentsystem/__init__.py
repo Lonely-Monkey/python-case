@@ -5,6 +5,9 @@ import textwrap
 import string
 import datetime
 
+from PyQt5 import QtWidgets, QtGui
+import sys
+
 class edc():
     def fil(self, n):
         print(pow(n,3))
@@ -25,5 +28,9 @@ def displaymatch(match: re.Match):
     return '<match: %r, group=%r>' % (match.group(), match.groups())
 
 if __name__ == '__main__':
-    va = re.compile("^[a]")
-    textwrap.wrap()
+    # va = re.compile("^[a]")
+    # textwrap.wrap()
+    app = QtWidgets.QApplication(sys.argv)
+    window = QtWidgets.QWidget();
+    window.show()
+    sys.exit(app.exec_())
