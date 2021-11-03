@@ -74,6 +74,7 @@ class Ui_MainWindow(object):
 
     #从网页提取数据
     def urlTosoup(self, url):
+        print(url)
         #打开url地址
         response = urllib.request.urlopen(url)
         #读取网页内容
@@ -122,9 +123,9 @@ class Ui_MainWindow(object):
                 #记录用户选择的期数
                 self.date = self.lineEdit_2.text()
                 #设置文章初始地址
-                self.baseurl = 'http://www/52duzhe.com/' + self.date.replace('-', '-') + '/'
+                self.baseurl = "http://www.duzhe.com/" + self.date.replace("-", "-") + "/"
                 #获取文件列表地址
-                urlList = self.baseurl + 'indec.html'
+                urlList = self.baseurl + "index.html"
                 #执行主方法
                 self.getData(urlList, self.lineEdit.text())
         except Exception as e:
@@ -255,14 +256,6 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        #为选择按钮绑定事件
-        self.pushButton_2.clicked.connect(self.msg())
-        #为确定按钮绑定单击事件
-        self.pushButton.clicked.connect(self.getDatas())
-        #绑定列表单击方法
-        self.listWidget.itemClicked.connect(self.itemClick())
-        #绑定表格单击方法
-        self.tabWidget.itemClicked.connect(self.tableClick())
 
 
     def retranslateUi(self, MainWindow):
@@ -290,6 +283,14 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "按期数显示"))
         # 设置第二个选项卡的标题
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "按名称显示"))
+        #为选择按钮绑定事件
+        self.pushButton_2.clicked.connect(lambda:self.msg())
+        #为确定按钮绑定单击事件
+        self.pushButton.clicked.connect(lambda:self.getDatas())
+        #绑定列表单击方法
+        self.listWidget.itemClicked.connect(lambda:self.itemClick())
+        #绑定表格单击方法
+        self.tabWidget.tabBarClicked.connect(lambda:self.tableClick())
 
 # 主方法，程序从此处启动pyqt5的窗体
 if __name__ == '__main__':
